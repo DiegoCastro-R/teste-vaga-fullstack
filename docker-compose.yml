@@ -1,0 +1,77 @@
+services:
+  ## https://x-team.com/blog/set-up-rabbitmq-with-docker-compose
+  rabbitmq:
+    image: rabbitmq:3-management-alpine
+    container_name: 'rabbitmq'
+    ports:
+      - 5672:5672
+      - 15672:15672
+    volumes:
+      - ~/.docker-conf/rabbitmq/data/:/var/lib/rabbitmq/
+      - ~/.docker-conf/rabbitmq/log/:/var/log/rabbitmq
+    networks:
+      - backend
+
+  ## https://medium.com/@randy.hamzah.h/running-minio-server-with-docker-compose-54bab3afbe31
+  minio:
+    image: minio/minio:latest
+    depends_on:
+      - rabbitmq
+    ports:
+      - '9000:9000'
+      - '9001:9001'
+    environment:
+      - MINIO_ROOT_USER=adminuser
+      - MINIO_ROOT_PASSWORD=adminpassword
+      - MINIO_VOLUMES=/mnt/data
+      - MINIO_OPTS=--console-address :9001
+      ## https://min.io/docs/minio/linux/reference/minio-server/settings/notifications/amqp.html
+      - MINIO_NOTIFY_AMQP_ENABLE_PRIMARY="on"
+      - MINIO_NOTIFY_AMQP_URL_PRIMARY="amqp://guest:guest@rabbitmq:5672"
+      - MINIO_NOTIFY_AMQP_EXCHANGE_PRIMARY="minio_events"
+      - MINIO_NOTIFY_AMQP_FORMAT_PRIMARY="namespace"
+    volumes:
+      - 'minio_data:/mnt/data'
+      - './config.env:/etc/config.env'
+    command: server --console-address ":9001"
+    networks:
+      - backend
+
+  ## https://stackoverflow.com/questions/66412289/minio-add-a-public-bucket-with-docker-compose
+  createbuckets:
+    image: minio/mc
+    depends_on:
+      - minio
+    entrypoint: >
+      /bin/sh -c "
+      /usr/bin/mc alias set myminio http://minio:9000 adminuser adminpassword;
+      /usr/bin/mc mb myminio/files;
+      /usr/bin/mc policy set public myminio/files;
+      "
+    networks:
+      - backend
+
+  ## PostgreSQL service
+  postgres:
+    image: postgres:latest
+    container_name: 'postgres'
+    ports:
+      - '5432:5432'
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: adminpassword
+      POSTGRES_DB: data_processor
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - backend
+
+networks:
+  backend:
+    driver: bridge
+
+volumes:
+  minio_data:
+    driver: local
+  postgres_data:
+    driver: local

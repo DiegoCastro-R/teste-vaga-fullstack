@@ -1,0 +1,66 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Contract {
+  id                   Int      @id @default(autoincrement())
+  file                 String
+  nrInst               String
+  nrAgencia            String
+  cdClient             String
+  nmClient             String
+  nrCpfCnpj            String
+  nrContrato           String
+  dtContrato           DateTime
+  qtPrestacoes         Int
+  vlTotal              Float
+  vlTotalInBRL         String
+  cdProduto            String
+  dsProduto            String
+  cdCarteira           String
+  dsCarteira           String
+  nrProposta           String
+  nrPresta             String
+  tpPresta             String
+  nrSeqPre             String
+  dtVctPre             DateTime
+  vlPresta             Float
+  vlPrestaInBrl        String
+  vlMora               Float
+  vlMoraInBrl          String
+  vlMulta              Float
+  vlMultaInBrl         String
+  vlOutAcr             Float
+  vlOutAcrInBrl        String
+  vlIof                String
+  vlIofInBrl           String
+  vlDescon             Float
+  vlDesconInBrl        String
+  vlAtual              Float
+  vlAtualInBrl         String
+  idSituac             String
+  idSitVen             String
+  vlTotalInt           Int
+  vlPrestaInt          Int
+  vlMoraInt            Int
+  vlPrestaMora         Int
+  calculatedPresta     Int
+  calculatedPrestaMora Int
+  vlMovimento          Int
+  isPrestaValid        Boolean
+  isPrestaMoraValid    Boolean
+  isMovimentoValid     Boolean
+  isCpfCnpjValid       Boolean
+  isValid              Boolean
+}
