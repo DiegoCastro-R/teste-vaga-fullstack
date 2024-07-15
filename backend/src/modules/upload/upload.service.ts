@@ -18,7 +18,7 @@ export class UploadService {
         file,
         filename,
       );
-      return { message: result, data: filename };
+      return { message: result, data: { file: filename } };
     } catch (error) {
       return { error: error.message };
     }

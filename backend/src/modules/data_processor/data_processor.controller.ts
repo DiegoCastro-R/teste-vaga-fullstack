@@ -1,4 +1,12 @@
-import { Controller, Post, Body, Logger } from '@nestjs/common';
+import {
+  Controller,
+  Post,
+  Body,
+  Logger,
+  Get,
+  Query,
+  ParseIntPipe,
+} from '@nestjs/common';
 import { DataProcessorService } from './data_processor.service';
 
 @Controller('data-processor')
@@ -17,6 +25,23 @@ export class DataProcessorController {
         error: 'Failed to process and download file',
         details: error.message,
       };
+    }
+  }
+  @Get('get-data')
+  async getDataResult(
+    @Query('fileName') fileName: string,
+    @Query('page', ParseIntPipe) page: number = 1,
+    @Query('pageSize', ParseIntPipe) pageSize: number = 10,
+  ) {
+    try {
+      const result = await this.dataProcessorService.getData(
+        fileName,
+        page,
+        pageSize,
+      );
+      return { data: result };
+    } catch (error) {
+      throw new Error('Failed to fetch data');
     }
   }
 }

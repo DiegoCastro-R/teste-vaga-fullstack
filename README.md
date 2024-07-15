@@ -1,35 +1,51 @@
-# Teste Prático para Desenvolvedor Full Stack Kronoos
+# Projeto de Exemplo
 
-Você foi designado para desenvolver uma aplicação que deve lidar com grandes volumes de dados. Você deve rodar as seguintes validações e tratativas para cada um dos dados do arquivo e mostrar um retorno ao concluir a rotina. A aplicação será responsável por fornecer uma massa de dados considerável (cerca de 30GB) e deve ser capaz de lidar com dados fornecidos.
+## Tecnologias Usadas:
 
-*Observação Importante:*
-1. Pedimos extremo comprometimento com o teste, e utilizamos IA para validar se os testes foram gerados por alguma IA (ChatGPT, LhamaGPT, Bard, Jasper, entre outras). Sua dedicação será crucial para uma avaliação justa.
-2. Pedimos que clonem o repo ou façam um fork para o github pessoal e nos sinalizem quando finalizarem, pois não será possível abrir PR neste repositório do teste.
+<p align="center">
+  <img src="https://cdn.worldvectorlogo.com/logos/next-js.svg" alt="NextJS Logo" width="100" height="100">
+  <img src="https://ih1.redbubble.net/image.1084299841.8155/tst,small,507x507-pad,600x600,f8f8f8.jpg" alt="NestJS Logo" width="100" height="100">
+  <img src="https://cdn.iconscout.com/icon/free/png-256/free-typescript-1174965.png" alt="Typescript Logo" width="100" height="100">
+  <img src="https://media.dev.to/cdn-cgi/image/width=1080,height=1080,fit=cover,gravity=auto,format=auto/https%3A%2F%2Fdev-to-uploads.s3.amazonaws.com%2Fuploads%2Farticles%2Fcsanba2xewj1pw2zprlh.png" alt="RabbitMQ Logo" width="100" height="100">
+  <img src="https://images.peerspot.com/image/upload/c_scale,f_auto,q_auto,w_200/w9l593yvqnusnz7stqcq6fcnvf6o.png" alt="Minio Logo" width="100" height="100">
+</p>
 
-## Manipulação de Dados de CSV e Conversão para Array
+## Descrição do Projeto
 
-- Os dados são fornecidos em formato CSV.
-- Utilizaremos a biblioteca fs (File System) para ler o arquivo CSV e a biblioteca csv-parser para processar os dados e convertê-los em um array de objetos JavaScript.
+Este projeto utiliza Next.js e NestJS para criar uma aplicação web full-stack. A integração entre front-end e back-end é feita utilizando TypeScript para garantir tipagem e segurança durante o desenvolvimento. RabbitMQ é utilizado para a comunicação assíncrona entre serviços, enquanto Minio é utilizado como um servidor de armazenamento de objetos para gerenciar arquivos e dados da aplicação.
 
-## Conversão de Dados para Moeda Real Brasileira
+## Instalação
 
-- Valores monetários, como vlTotal, vlPresta, vlMora, etc., precisam ser formatados como moeda brasileira (BRL).
-- Utilizaremos a biblioteca intl do JavaScript para formatar os valores numéricos como moeda BRL, incluindo o símbolo de real (R$), separador de milhar e precisão de duas casas decimais.
+Para instalar e executar este projeto localmente, siga os passos abaixo:
 
-## Validação de CPF ou CNPJ
+1. Clone o repositório do GitHub:
 
-- Implementaremos uma função para validar o campo nrCpfCnpj e verificar se ele é um CPF ou CNPJ válido, seguindo as regras de validação apropriadas para cada formato.
-- Parte de todos os CPF e CNPJ sao invalidos, usamos um script para gerar dados fictícios. 
+   ```bash
+   git clone https://github.com/DiegoCastro-R/teste-vaga-fullstack/
+   git checkout feat/diego-castro-r-implementation
 
-## Validação de Valor Total e Prestações
 
-- Dividiremos o valor de vlTotal pela quantidade de prestações (qtPrestacoes).
-- Verificaremos se o resultado dessa divisão é igual ao valor de vlPresta para cada prestação, garantindo que os cálculos estejam corretos e consistentes.
-- Essa função deve retornar um valor true ou false.
-- Para chegar a um valor aproximado, devera converter o valor total para um numero inteiro, ignorando as dezenas quebradas, e calculando a data de pagamento para verificar se existe juros acumulado, e o valor de mora, caso o valor do movimento(vlMovimento) seja maior que o valor do pagamento (vlPag), devera construir uma trataviva adequada dizendo que o pagamento está inconsistente.
 
----
+2. Instale as dependências do projeto:
 
-A conclusão bem-sucedida deste teste será avaliada com base na implementação eficiente de conceitos como tratamento de dados em larga escala, comunicação assíncrona, gerenciamento de estado, manipulação de CSV, escolha adequada de tecnologias e boas práticas de desenvolvimento.
+    ```bash
+    ./install-deps.sh
 
-Boa sorte!
+3. Prepare o ambiente docker:
+    ```bash
+    docker-compose up -d
+
+
+3. Execute a aplicação:
+
+    ```bash
+    ./app-init.sh
+    O front-end estará disponível em http://localhost:3000 e o back-end em http://localhost:3001.
+
+Funcionalidades
+Upload de Arquivos: Permite o upload de arquivos CSV que são processados pelo back-end para extrair e validar dados.
+
+Integração Assíncrona: Utiliza RabbitMQ para processamento assíncrono de eventos entre serviços.
+
+Armazenamento de Objetos: Utiliza Minio como um servidor de armazenamento de objetos para gerenciar arquivos grandes e dados da aplicação.
+

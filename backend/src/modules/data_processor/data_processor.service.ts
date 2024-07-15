@@ -86,4 +86,30 @@ export class DataProcessorService {
       throw new Error(`Failed to process and download file: ${error.message}`);
     }
   }
+
+  async getData(fileName: string, page: number = 1, pageSize: number = 10) {
+    const skip = (page - 1) * pageSize;
+    const take = pageSize;
+
+    const data = await this.prisma.contract.findMany({
+      where: { file: fileName },
+      skip,
+      take,
+    });
+
+    const totalRecords = await this.prisma.contract.count({
+      where: { file: fileName },
+    });
+
+    const totalPages = Math.ceil(totalRecords / pageSize);
+
+    return {
+      fileData: data,
+      pagination: {
+        currentPage: page,
+        totalPages,
+        totalRecords,
+      },
+    };
+  }
 }
