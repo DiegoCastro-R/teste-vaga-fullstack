@@ -18,7 +18,7 @@ Este projeto utiliza Next.js e NestJS para criar uma aplicação web full-stack.
 
 Para instalar e executar este projeto localmente, siga os passos abaixo:
 
-1. Clone o repositório do GitHub:
+1. Clone o repositório do GitHub e realize o checkout para a branch:
 
    ```bash
    git clone https://github.com/DiegoCastro-R/teste-vaga-fullstack/
