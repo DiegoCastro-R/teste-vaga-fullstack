@@ -143,8 +143,6 @@ const Home: React.FC = () => {
       if (response.status === 200 && response.data.data.fileData.length > 0) {
         const fileData = response.data.data.fileData;
         setFileData(fileData);
-
-        // Atualiza o estado dos arquivos processados
         const updatedFiles = uploadedFiles.map((file) => {
           if (file.fileName === fileName) {
             return {
