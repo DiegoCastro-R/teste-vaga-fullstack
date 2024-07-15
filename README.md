@@ -40,7 +40,8 @@ Para instalar e executar este projeto localmente, siga os passos abaixo:
 
     ```bash
     ./app-init.sh
-    O front-end estará disponível em http://localhost:3000 e o back-end em http://localhost:3001.
+    
+  ### O front-end estará disponível em http://localhost:3000 e o back-end em http://localhost:3001.  
 
 Funcionalidades
 Upload de Arquivos: Permite o upload de arquivos CSV que são processados pelo back-end para extrair e validar dados.
